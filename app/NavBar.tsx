@@ -7,7 +7,7 @@ export default async function NavBar() {
     console.log(userName);
 
     return (
-        <nav className='h-12 flex items-center justify-end p-6'>
+        <nav className='h-12 flex items-center justify-end px-6 py-12'>
             <ul className='flex flex-row gap-3'>
                 {isUserAuthenticated ? (
                     <li className="btn btn-primary">
