@@ -10,7 +10,8 @@ generator client {
 model User {
     id            Int            @id @default(autoincrement())
     userID        String         @unique
-    name          String
+    family_name   String
+    given_name    String
     wishlistItems WishlistItem[]
 }
 
