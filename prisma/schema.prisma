@@ -18,8 +18,8 @@ model User {
 model WishlistItem {
     id        Int    @id @default(autoincrement())
     name      String
-    link      String
-    photoLink String
+    link      String @db.LongText
+    photoLink String @db.LongText
     price     Float
     userId    Int
     user      User   @relation(fields: [userId], references: [id])
