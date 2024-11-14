@@ -10,6 +10,23 @@ export async function getUserById(userId: string) {
     });
 }
 
+export async function createItem(userId: number, name: string, link: string, price: number, photoLink = "default") {
+    'use server';
+    return prisma.wishlistItem.create({
+        data: {
+            name,
+            link,
+            price,
+            photoLink,
+            user: {
+                connect: {
+                    id: userId,
+                },
+            },
+        },
+    });
+}
+
 export async function deleteItem(itemId: number) {
     'use server';
     return prisma.wishlistItem.delete({
