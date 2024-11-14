@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
     const { isAuthenticated } = getKindeServerSession();
     const isUserAuthenticated = await isAuthenticated();
 
-    if (!isUserAuthenticated) {
+    if (!isUserAuthenticated && request.nextUrl.pathname !== '/') {
         return NextResponse.redirect(new URL('/', request.url));
     }
 
