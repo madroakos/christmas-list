@@ -1,8 +1,8 @@
 import prisma from "@/prisma/db"
 import Link from "next/link"
 import Image from "next/image"
-import profpic from "@/public/images/profpic.webp"
 import { formatPrice } from "@/app/helpers/formatPrice"
+import UserAvatar from "@/app/components/UserAvatar"
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
     const userId = (await params).id
@@ -26,11 +26,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     return (
         <div className="flex flex-col items-center">
             <div className="flex flex-col items-center gap-3">
-                <div className="avatar">
-                    <div className="w-24 rounded-full">
-                        <Image width={80} height={80} alt={`${user.given_name} ${user.family_name}`} src={profpic} />
-                    </div>
-                </div>
+                <UserAvatar user={user} />
                 <div className="text-2xl font-bold">{user.given_name} {user.family_name}</div>
             </div>
             <div className="flex flex-col gap-3 mt-6 w-full">
