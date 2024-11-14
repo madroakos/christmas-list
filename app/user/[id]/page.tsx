@@ -24,7 +24,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     }
 
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center px-12">
             <div className="flex flex-col items-center gap-3">
                 <UserAvatar user={user} />
                 <div className="text-2xl font-bold">{user.given_name} {user.family_name}</div>
