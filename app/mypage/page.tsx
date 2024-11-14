@@ -2,7 +2,7 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import prisma from '@/prisma/db';
 import Link from 'next/link';
 import { deleteItem } from '@/prisma/actions';
-import DeleteButton from '@/app/components/DeleteButton';
+import DeleteButton from '@/app/mypage/DeleteButton';
 import { revalidatePath } from 'next/cache';
 import Image from 'next/image';
 
@@ -30,13 +30,26 @@ export default async function MyPage() {
             return (
                 <div className="flex flex-col items-center">
                     <div className="flex flex-col items-center gap-3">
-                        <div className="avatar">
-                            <div className="w-24 rounded-full">
-                                <Image width={80} height={80} src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt={`Profile picture of ${user.given_name} ${user.family_name}`} />
-                            </div>
-                        </div>
+                        {userExists.profile_picture.includes("default") ?
+                            (
+                                <div className="avatar placeholder">
+                                    <div className="bg-neutral text-neutral-content w-24 rounded-full">
+                                        <span className="text-3xl">{userExists.given_name.substring(0, 1)}</span>
+                                    </div>
+                                </div>
+                            )
+                            :
+                            (
+                                <div className="avatar">
+                                    <div className="w-24 rounded-full">
+                                        <Image width={80} height={80} src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt={`Profile picture of ${user.given_name} ${user.family_name}`} />
+                                    </div>
+                                </div>
+                            )
+                        }
+
                         <div className="text-2xl font-bold">{user.given_name} {user.family_name}</div>
-                    </div>
+                    </div >
                     <div className="flex flex-col gap-3 mt-6 w-full">
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-64 self-center">Add new item</button>
                         {items.map(item => (
@@ -58,7 +71,7 @@ export default async function MyPage() {
                             </div>
                         ))}
                     </div>
-                </div>
+                </div >
             )
         }
     } else {
@@ -70,9 +83,8 @@ export default async function MyPage() {
     }
 }
 
-function onDelete(itemId: number) {
-
+async function onDelete(itemId: number) {
+    'use server';
     deleteItem(itemId);
-
     revalidatePath('/mypage');
 }
