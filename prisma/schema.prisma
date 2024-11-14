@@ -8,13 +8,14 @@ generator client {
 }
 
 model User {
-    id            Int            @id @default(autoincrement())
-    userID        String         @unique
-    family_name   String
-    given_name    String
-    wishlistItems WishlistItem[]
-    followedUsers Follow[]       @relation("Following")
-    followers     Follow[]       @relation("Followers")
+    id              Int            @id @default(autoincrement())
+    userID          String         @unique
+    family_name     String
+    given_name      String
+    profile_picture String         @default("default")
+    wishlistItems   WishlistItem[]
+    followedUsers   Follow[]       @relation("Following")
+    followers       Follow[]       @relation("Followers")
 }
 
 model WishlistItem {
