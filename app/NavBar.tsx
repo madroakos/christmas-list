@@ -15,13 +15,19 @@ export default async function NavBar() {
             <div>
                 <ul className='flex flex-row gap-3'>
                     {isUserAuthenticated ? (
-                        <li className="btn btn-primary">
-                            <LogoutLink>Sign out</LogoutLink>
-                        </li>
+                        <>
+                            <Link href='/mypage'>
+                                <li className="btn btn-primary">My page</li>
+                            </Link>
+                            <LogoutLink>
+                                <li className="btn btn-primary">Sign out</li>
+                            </LogoutLink>
+
+                        </>
                     ) : (
                         <>
                             <li className="btn btn-primary">
-                                <LoginLink>Sign in</LoginLink>
+                                <LoginLink>Login</LoginLink>
                             </li>
                             <li className="btn btn-primary">
                                 <RegisterLink>Sign up</RegisterLink>
