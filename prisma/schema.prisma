@@ -13,6 +13,8 @@ model User {
     family_name   String
     given_name    String
     wishlistItems WishlistItem[]
+    followedUsers Follow[]       @relation("Following")
+    followers     Follow[]       @relation("Followers")
 }
 
 model WishlistItem {
@@ -23,4 +25,14 @@ model WishlistItem {
     price     Float
     userId    Int
     user      User   @relation(fields: [userId], references: [id])
+}
+
+model Follow {
+    id          Int  @id @default(autoincrement())
+    followerId  Int
+    followingId Int
+    follower    User @relation("Following", fields: [followerId], references: [id])
+    following   User @relation("Followers", fields: [followingId], references: [id])
+
+    @@unique([followerId, followingId])
 }
