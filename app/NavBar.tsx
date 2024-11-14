@@ -1,10 +1,8 @@
 import { getKindeServerSession, LoginLink, LogoutLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export default async function NavBar() {
-    const { isAuthenticated, getUser } = getKindeServerSession();
+    const { isAuthenticated } = getKindeServerSession();
     const isUserAuthenticated = await isAuthenticated();
-    const userName = await getUser();
-    console.log(userName);
 
     return (
         <nav className='h-12 flex items-center justify-end px-6 py-12'>
