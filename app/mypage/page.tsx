@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { deleteItem } from '@/prisma/actions';
 import DeleteButton from '@/app/components/DeleteButton';
 import { revalidatePath } from 'next/cache';
+import Image from 'next/image';
 
 export default async function MyPage() {
     const { isAuthenticated, getUser } = getKindeServerSession();
@@ -31,7 +32,7 @@ export default async function MyPage() {
                     <div className="flex flex-col items-center gap-3">
                         <div className="avatar">
                             <div className="w-24 rounded-full">
-                                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                <Image width={80} height={80} src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt={`Profile picture of ${user.given_name} ${user.family_name}`} />
                             </div>
                         </div>
                         <div className="text-2xl font-bold">{user.given_name} {user.family_name}</div>
@@ -43,7 +44,7 @@ export default async function MyPage() {
                                 <Link href={item.link} >
                                     <div key={item.id} className="flex flex-row gap-3">
                                         <div>
-                                            <img src={item.photoLink} className="w-24 h-24 bg-clip-content rounded-xl" />
+                                            <Image width={80} height={80} src={item.photoLink} alt={item.name} className="w-24 h-24 bg-clip-content rounded-xl" />
                                         </div>
                                         <div className="flex flex-col self-center items-center">
                                             <div className="text-lg">{item.name}</div>
