@@ -1,15 +1,10 @@
 import getData from "@/app/dashboard/followerItems"
 import Link from "next/link";
+import Image from "next/image";
+import { formatPrice } from "@/app/helpers/formatPrice";
+
 export default async function DashboardPage() {
     const items = await getData();
-
-    const formatPrice = (price: number) => {
-        return new Intl.NumberFormat('hu-HU', {
-            style: 'currency',
-            currency: 'HUF',
-            maximumFractionDigits: 0
-        }).format(price);
-    };
 
     if (items) {
         return (
@@ -23,7 +18,7 @@ export default async function DashboardPage() {
                             {userWithItems.items.map((item) => (
                                 <Link key={item.id} href={item.link} passHref>
                                     <div className="flex flex-row gap-3">
-                                        <img src={item.photoLink} alt={item.name} className="w-20 h-20 rounded-lg" />
+                                        <Image width={80} height={80} src={item.photoLink} alt={item.name} className="rounded-lg" />
                                         <div className="flex flex-col self-center">
                                             <h2 className="font-bold text-lg">{item.name}</h2>
                                             <p>{formatPrice(item.price)}</p>
