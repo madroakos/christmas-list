@@ -2,12 +2,41 @@ import getData from "@/app/dashboard/followerItems"
 import Link from "next/link";
 import Image from "next/image";
 import { formatPrice } from "@/app/helpers/formatPrice";
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { getUserById } from "@/prisma/actions";
+import { buyItem, cancelBuy } from "@/prisma/actions";
+import { revalidatePath } from "next/cache";
+import BuyButton from "./BuyButton";
+import CancelBuyButton from "./CancelBuyButton";
 
 export default async function DashboardPage() {
     const items = await getData();
 
+    const { getUser } = getKindeServerSession();
+    const kindeUser = await getUser();
+    const user = await getUserById(kindeUser.id);
+
+    const handleBuyItem = async (itemId: number) => {
+        'use server';
+        if (user === null) {
+            return;
+        }
+        buyItem(itemId, user.id);
+        revalidatePath('/dashboard');
+    }
+
+    const handleCancelBuy = async (itemId: number) => {
+        'use server';
+        if (user === null) {
+            return;
+        }
+        cancelBuy(itemId);
+        revalidatePath('/dashboard');
+    }
+
+
     return (
-        <div className="flex flex-col gap-6 p-12">
+        <div className="flex flex-col gap-6 p-12 md:mx-auto md:w-[40em] lg:w-[50em] xl:w-[55em] 2xl:w-[60em]">
             <h1 className="font-bold text-3xl self-center">Santa&apos;s list</h1>
 
             {items ? items.map((userWithItems) => (
@@ -20,24 +49,39 @@ export default async function DashboardPage() {
                             const photoLink = item.photoLink === "default" ? '/images/default_item.png' : item.photoLink;
 
                             return (
-                                <Link key={item.id} href={item.link} passHref>
-                                    <div className="flex flex-row gap-3">
-                                        <div className="relative min-w-24 min-h-24 max-h-24">
-                                            <Image src={photoLink} alt={item.name} className="rounded-lg" fill={true} objectFit="cover" />
+
+                                <div className="flex flex-row justify-between">
+                                    <Link key={item.id} href={item.link} passHref>
+                                        <div className="flex flex-row gap-3">
+                                            <div className="relative min-w-24 min-h-24 max-h-24">
+                                                <Image src={photoLink} alt={item.name} className="rounded-lg" fill={true} objectFit="cover" />
+                                            </div>
+                                            <div className="flex flex-col self-center">
+                                                <h2 className="font-bold text-lg">{item.name}</h2>
+                                                <p>{formatPrice(item.price)}</p>
+                                            </div>
                                         </div>
-                                        <div className="flex flex-col self-center">
-                                            <h2 className="font-bold text-lg">{item.name}</h2>
-                                            <p>{formatPrice(item.price)}</p>
-                                        </div>
+                                    </Link>
+                                    <div className="self-center">
+                                        {item.boughtbyUserId ?
+                                            item.boughtbyUserId === user?.id ? (
+                                                <CancelBuyButton handleCancelBuy={handleCancelBuy} itemId={item.id} />
+                                            ) : (
+                                                <p className="w-16">Bought</p>
+                                            ) : (
+                                                <BuyButton handleBuyItem={handleBuyItem} itemId={item.id} />
+                                            )}
                                     </div>
-                                </Link>
+                                </div>
+
                             )
                         })}
                     </div>
                 </div>
             )) : (<div className="flex self-center">
                 <h1 className="text-2xl">Follow other people to see their wishes</h1>
-            </div>)}
-        </div>
+            </div>)
+            }
+        </div >
     )
 }

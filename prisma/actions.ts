@@ -27,6 +27,30 @@ export async function createItem(userId: number, name: string, link: string, pri
     });
 }
 
+export async function buyItem(itemId: number, buyerId: number) {
+    'use server';
+    return prisma.wishlistItem.update({
+        where: {
+            id: itemId,
+        },
+        data: {
+            boughtbyUserId: buyerId,
+        },
+    });
+}
+
+export async function cancelBuy(itemId: number) {
+    'use server';
+    return prisma.wishlistItem.update({
+        where: {
+            id: itemId,
+        },
+        data: {
+            boughtbyUserId: null,
+        },
+    });
+}
+
 export async function deleteItem(itemId: number) {
     'use server';
     return prisma.wishlistItem.delete({
