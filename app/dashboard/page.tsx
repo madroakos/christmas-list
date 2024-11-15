@@ -36,7 +36,7 @@ export default async function DashboardPage() {
                     </div>
                 </div>
             )) : (<div className="flex self-center">
-                <h1 className="font-bold text-2xl">No items to display</h1>
+                <h1 className="text-2xl">Follow other people to see their wishes</h1>
             </div>)}
         </div>
     )
