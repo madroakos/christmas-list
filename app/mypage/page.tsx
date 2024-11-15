@@ -6,6 +6,7 @@ import DeleteButton from '@/app/mypage/DeleteButton';
 import { revalidatePath } from 'next/cache';
 import Image from 'next/image';
 import UserAvatar from '@/app/components/UserAvatar';
+import { formatPrice } from '@/app/helpers/formatPrice';
 
 export default async function MyPage() {
     const { isAuthenticated, getUser } = getKindeServerSession();
@@ -36,24 +37,27 @@ export default async function MyPage() {
                     </div >
                     <div className="flex flex-col gap-3 mt-6 w-full">
                         <Link href={'/items/add'} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-64 self-center text-center">Add new item</Link>
-                        {items.map(item => (
-                            <div key={item.id} className='flex flex-row w-full md:self-center md:w-[75vw] lg:w-[50vw] xl:w-[30vw] justify-between px-6'>
-                                <Link href={item.link} >
-                                    <div key={item.id} className="flex flex-row gap-3">
-                                        <div>
-                                            <Image width={80} height={80} src={item.photoLink} alt={item.name} className="w-24 h-24 bg-clip-content rounded-xl" />
+                        {items.map(item => {
+                            const photoLink = item.photoLink === "default" ? '/images/default_item.png' : item.photoLink;
+                            return (
+                                <div key={item.id} className='flex flex-row w-full md:self-center md:w-[75vw] lg:w-[50vw] xl:w-[30vw] justify-between px-6'>
+                                    <Link href={item.link} >
+                                        <div key={item.id} className="flex flex-row gap-3">
+                                            <div>
+                                                <Image width={80} height={80} src={photoLink} alt={item.name} className="rounded-xl" />
+                                            </div>
+                                            <div className="flex flex-col self-center">
+                                                <div className="text-lg">{item.name}</div>
+                                                <div className="text-lg">{formatPrice(item.price)}</div>
+                                            </div>
                                         </div>
-                                        <div className="flex flex-col self-center items-center">
-                                            <div className="text-lg">{item.name}</div>
-                                            <div className="text-lg">{item.price}Ft</div>
-                                        </div>
+                                    </Link>
+                                    <div className='self-center'>
+                                        <DeleteButton onDelete={onDelete} itemId={item.id} />
                                     </div>
-                                </Link>
-                                <div className='self-center'>
-                                    <DeleteButton onDelete={onDelete} itemId={item.id} />
                                 </div>
-                            </div>
-                        ))}
+                            )
+                        })}
                     </div>
                 </div >
             )
