@@ -73,6 +73,16 @@ export async function getFollowedUsers(follower: User) {
     });
 }
 
+export async function getIfUserFollows(followerId: number, followedId: number) {
+    'use server';
+    return prisma.follow.findFirst({
+        where: {
+            followerId: followerId,
+            followingId: followedId,
+        },
+    });
+}
+
 export async function getItemsByUser(ownerUserId: number) {
     'use server';
     return prisma.wishlistItem.findMany({
