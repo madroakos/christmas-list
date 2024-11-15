@@ -35,7 +35,7 @@ export default async function AddItemPage() {
                 <div className="self-start ">
                     <BackButton />
                 </div>
-                <p className="font-bold text-xl">Input a link for you item:</p>
+                {/* <p className="font-bold text-xl">Input a link for you item:</p>
                 <label className="input input-bordered flex items-center gap-2">
                     <input type="text" className="grow" placeholder="Search" />
                     <svg
@@ -49,7 +49,7 @@ export default async function AddItemPage() {
                             clipRule="evenodd" />
                     </svg>
                 </label>
-                <div className="divider self-center">OR</div>
+                <div className="divider self-center">OR</div> */}
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
                         <span className="label-text">Product name:</span>
