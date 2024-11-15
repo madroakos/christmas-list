@@ -1,12 +1,8 @@
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import prisma from '@/prisma/db';
 import Link from 'next/link';
-import { deleteItem } from '@/prisma/actions';
-import DeleteButton from '@/app/mypage/DeleteButton';
-import { revalidatePath } from 'next/cache';
-import Image from 'next/image';
 import UserAvatar from '@/app/components/UserAvatar';
-import { formatPrice } from '@/app/helpers/formatPrice';
+import ProductList from './ProductList';
 
 export default async function MyPage() {
     const { isAuthenticated, getUser } = getKindeServerSession();
@@ -29,6 +25,12 @@ export default async function MyPage() {
                 },
             });
 
+            const itemsBought = await prisma.wishlistItem.findMany({
+                where: {
+                    boughtbyUserId: userExists.id,
+                },
+            });
+
             return (
                 <div className="flex flex-col items-center">
                     <div className="flex flex-col items-center gap-3">
@@ -37,27 +39,11 @@ export default async function MyPage() {
                     </div >
                     <div className="flex flex-col gap-3 mt-6 w-full">
                         <Link href={'/items/add'} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-64 self-center text-center">Add new item</Link>
-                        {items.map(item => {
-                            const photoLink = item.photoLink === "default" ? '/images/default_item.png' : item.photoLink;
-                            return (
-                                <div key={item.id} className='flex flex-row w-full md:self-center md:w-[40em] lg:w-[43em] xl:w-[45em] 2xl:w-[50em] justify-between px-6'>
-                                    <Link href={item.link} >
-                                        <div key={item.id} className="flex flex-row gap-3">
-                                            <div>
-                                                <Image width={80} height={80} src={photoLink} alt={item.name} className="rounded-xl" />
-                                            </div>
-                                            <div className="flex flex-col self-center">
-                                                <div className="text-lg">{item.name}</div>
-                                                <div className="text-lg">{formatPrice(item.price)}</div>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                    <div className='self-center'>
-                                        <DeleteButton onDelete={onDelete} itemId={item.id} />
-                                    </div>
-                                </div>
-                            )
-                        })}
+                        <ProductList userId={userExists.id} items={items} buttonType={"delete"} />
+                    </div>
+                    <div className='mt-12'>
+                        <h1 className='text-2xl font-bold text-center mb-6'>Items you marked for buy</h1>
+                        <ProductList userId={userExists.id} items={itemsBought} buttonType={"cancel"} />
                     </div>
                 </div >
             )
@@ -69,10 +55,4 @@ export default async function MyPage() {
             </div>
         )
     }
-}
-
-async function onDelete(itemId: number) {
-    'use server';
-    deleteItem(itemId);
-    revalidatePath('/mypage');
 }
