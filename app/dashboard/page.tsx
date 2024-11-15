@@ -31,8 +31,8 @@ export default async function DashboardPage() {
 
                             return (
 
-                                <div className="flex flex-row justify-between">
-                                    <Link key={item.id} href={item.link} passHref>
+                                <div key={item.id} className="flex flex-row justify-between">
+                                    <Link href={item.link} passHref>
                                         <div className="flex flex-row gap-3">
                                             <div className="relative min-w-24 min-h-24 max-h-24">
                                                 <Image src={photoLink} alt={item.name} className="rounded-lg" fill={true} objectFit="cover" />
