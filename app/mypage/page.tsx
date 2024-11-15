@@ -40,7 +40,7 @@ export default async function MyPage() {
                         {items.map(item => {
                             const photoLink = item.photoLink === "default" ? '/images/default_item.png' : item.photoLink;
                             return (
-                                <div key={item.id} className='flex flex-row w-full md:self-center md:w-[75vw] lg:w-[50vw] xl:w-[30vw] justify-between px-6'>
+                                <div key={item.id} className='flex flex-row w-full md:self-center md:w-[40em] lg:w-[43em] xl:w-[45em] 2xl:w-[50em] justify-between px-6'>
                                     <Link href={item.link} >
                                         <div key={item.id} className="flex flex-row gap-3">
                                             <div>
