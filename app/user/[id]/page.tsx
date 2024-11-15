@@ -15,7 +15,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
     const items = await prisma.wishlistItem.findMany({
         where: {
-            userId: user?.id
+            ownerUserId: user?.id
         }
     })
 

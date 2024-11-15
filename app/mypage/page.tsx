@@ -25,7 +25,7 @@ export default async function MyPage() {
         if (userExists) {
             const items = await prisma.wishlistItem.findMany({
                 where: {
-                    userId: userExists.id,
+                    ownerUserId: userExists.id,
                 },
             });
 
