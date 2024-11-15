@@ -30,19 +30,22 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                 <div className="text-2xl font-bold">{user.given_name} {user.family_name}</div>
             </div>
             <div className="flex flex-col gap-3 mt-6 w-full">
-                {items.map(item => (
-                    <Link href={item.link} key={item.id} className="flex justify-center">
-                        <div key={item.id} className="flex flex-row gap-3">
-                            <div>
-                                <Image width={80} height={80} alt={item.name} src={item.photoLink} className="w-24 h-24 bg-clip-content rounded-xl" />
+                {items.map(item => {
+                    const photoLink = item.photoLink === "default" ? '/images/default_item.png' : item.photoLink;
+                    return (
+                        <Link href={item.link} key={item.id} className="flex w-full sm:w-10/12">
+                            <div key={item.id} className="flex flex-row gap-3">
+                                <div className="relative min-w-24 min-h-24 max-h-24">
+                                    <Image alt={item.name} src={photoLink} fill={true} objectFit="cover" className=" rounded-lg" />
+                                </div>
+                                <div className="flex flex-col w-[80%]">
+                                    <div className="text-lg">{item.name}</div>
+                                    <div className="text-lg">{formatPrice(item.price)}</div>
+                                </div>
                             </div>
-                            <div className="flex flex-col w-[80%]">
-                                <div className="text-lg">{item.name}</div>
-                                <div className="text-lg">{formatPrice(item.price)}</div>
-                            </div>
-                        </div>
-                    </Link>
-                ))}
+                        </Link>
+                    )
+                })}
             </div>
         </div>
     )
