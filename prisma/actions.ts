@@ -49,11 +49,11 @@ export async function getFollowedUsers(follower: User) {
     });
 }
 
-export async function getItemsByUser(userId: number) {
+export async function getItemsByUser(ownerUserId: number) {
     'use server';
     return prisma.wishlistItem.findMany({
         where: {
-            userId,
+            ownerUserId,
         },
     });
 }
