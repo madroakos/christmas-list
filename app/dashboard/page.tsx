@@ -16,17 +16,23 @@ export default async function DashboardPage() {
                         <h1 className="font-bold text-2xl mb-3">{userWithItems.user.given_name} {userWithItems.user.family_name}</h1>
                     </Link>
                     <div className="flex flex-col gap-6">
-                        {userWithItems.items.map((item) => (
-                            <Link key={item.id} href={item.link} passHref>
-                                <div className="flex flex-row gap-3">
-                                    <Image width={80} height={80} src={item.photoLink} alt={item.name} className="rounded-lg" />
-                                    <div className="flex flex-col self-center">
-                                        <h2 className="font-bold text-lg">{item.name}</h2>
-                                        <p>{formatPrice(item.price)}</p>
+                        {userWithItems.items.map((item) => {
+                            const photoLink = item.photoLink === "default" ? '/images/default_item.png' : item.photoLink;
+
+                            return (
+                                <Link key={item.id} href={item.link} passHref>
+                                    <div className="flex flex-row gap-3">
+                                        <div className="relative min-w-24 min-h-24 max-h-24">
+                                            <Image src={photoLink} alt={item.name} className="rounded-lg" fill={true} objectFit="cover" />
+                                        </div>
+                                        <div className="flex flex-col self-center">
+                                            <h2 className="font-bold text-lg">{item.name}</h2>
+                                            <p>{formatPrice(item.price)}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        ))}
+                                </Link>
+                            )
+                        })}
                     </div>
                 </div>
             )) : (<div className="flex self-center">
