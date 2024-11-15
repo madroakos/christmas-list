@@ -2,6 +2,8 @@ import { createItem } from "@/prisma/actions"
 import BackButton from "./BackButton"
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { getUserById } from "@/prisma/actions";
+import { redirect } from 'next/navigation';
+import { revalidatePath } from "next/cache";
 
 export default async function AddItemPage() {
     const { getUser } = getKindeServerSession();
@@ -16,7 +18,9 @@ export default async function AddItemPage() {
             const price = formData.get('price') as string | null;
 
             if (name && link && price) {
-                createItem(userFromDatabase.id, name, link, parseFloat(price));
+                await createItem(userFromDatabase.id, name, link, parseFloat(price))
+                revalidatePath(`/mypage`);
+                redirect(`/mypage`);
             } else {
                 console.error("Form data is incomplete");
             }
