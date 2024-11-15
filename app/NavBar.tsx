@@ -26,12 +26,16 @@ export default async function NavBar() {
                         </>
                     ) : (
                         <>
-                            <li className="btn btn-primary">
-                                <LoginLink>Login</LoginLink>
-                            </li>
-                            <li className="btn btn-primary">
-                                <RegisterLink>Sign up</RegisterLink>
-                            </li>
+                            <LoginLink>
+                                <li className="btn btn-primary">
+                                    Sign in
+                                </li>
+                            </LoginLink>
+                            <RegisterLink>
+                                <li className="btn btn-primary">
+                                    Sign up
+                                </li>
+                            </RegisterLink>
                         </>
                     )}
                 </ul>
