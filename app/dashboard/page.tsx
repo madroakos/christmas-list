@@ -1,13 +1,12 @@
+'use server';
 import getData from "@/app/dashboard/followerItems"
 import Link from "next/link";
 import Image from "next/image";
 import { formatPrice } from "@/app/helpers/formatPrice";
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { getUserById } from "@/prisma/actions";
-import { buyItem, cancelBuy } from "@/prisma/actions";
-import { revalidatePath } from "next/cache";
-import BuyButton from "./BuyButton";
-import CancelBuyButton from "./CancelBuyButton";
+import BuyButton from "../components/BuyButton/BuyButton";
+import CancelBuyButton from "../components/CancelBuyButton/CancelBuyButton";
 
 export default async function DashboardPage() {
     const items = await getData();
@@ -15,24 +14,6 @@ export default async function DashboardPage() {
     const { getUser } = getKindeServerSession();
     const kindeUser = await getUser();
     const user = await getUserById(kindeUser.id);
-
-    const handleBuyItem = async (itemId: number) => {
-        'use server';
-        if (user === null) {
-            return;
-        }
-        buyItem(itemId, user.id);
-        revalidatePath('/dashboard');
-    }
-
-    const handleCancelBuy = async (itemId: number) => {
-        'use server';
-        if (user === null) {
-            return;
-        }
-        cancelBuy(itemId);
-        revalidatePath('/dashboard');
-    }
 
 
     return (
@@ -65,11 +46,13 @@ export default async function DashboardPage() {
                                     <div className="self-center">
                                         {item.boughtbyUserId ?
                                             item.boughtbyUserId === user?.id ? (
-                                                <CancelBuyButton handleCancelBuy={handleCancelBuy} itemId={item.id} />
+                                                <CancelBuyButton userId={user.id} itemId={item.id} />
                                             ) : (
-                                                <p className="w-16">Bought</p>
+                                                <p className="btn btn-ghost w-16 btn-disabled">Bought</p>
                                             ) : (
-                                                <BuyButton handleBuyItem={handleBuyItem} itemId={item.id} />
+                                                user ? (
+                                                    <BuyButton userId={user?.id} itemId={item.id} />
+                                                ) : (<></>)
                                             )}
                                     </div>
                                 </div>
