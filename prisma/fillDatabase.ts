@@ -31,7 +31,7 @@ async function fillDatabase() {
             price: 1000,
             link: "https://www.amazon.de/-/en/Amazon-Basics-Piece-Non-Stick-Cookware/dp/B07481LPMF/259-4423389-2646104?pd_rd_w=UlD2Z&content-id=amzn1.sym.0b440ba7-e55f-435d-b17d-0bbcfd69be42&pf_rd_p=0b440ba7-e55f-435d-b17d-0bbcfd69be42&pf_rd_r=1YQRD6DRT9WDS7MBY0V9&pd_rd_wg=3q2tV&pd_rd_r=46ddd3eb-fbe3-439c-94ce-5825cf3536d6&pd_rd_i=B07481LPMF&th=1",
             photoLink: "/images/pan.jpg",
-            userId: user1.id,
+            ownerUserId: user1.id,
         },
     });
 
@@ -41,7 +41,7 @@ async function fillDatabase() {
             price: 2000,
             link: "https://www.amazon.de/-/en/Amazon-Basics-Piece-Non-Stick-Cookware/dp/B07481LPMF/259-4423389-2646104?pd_rd_w=UlD2Z&content-id=amzn1.sym.0b440ba7-e55f-435d-b17d-0bbcfd69be42&pf_rd_p=0b440ba7-e55f-435d-b17d-0bbcfd69be42&pf_rd_r=1YQRD6DRT9WDS7MBY0V9&pd_rd_wg=3q2tV&pd_rd_r=46ddd3eb-fbe3-439c-94ce-5825cf3536d6&pd_rd_i=B07481LPMF&th=1",
             photoLink: "/images/pan.jpg",
-            userId: user2.id,
+            ownerUserId: user2.id,
         },
     });
 
@@ -51,7 +51,7 @@ async function fillDatabase() {
             price: 3000,
             link: "https://www.amazon.de/-/en/Amazon-Basics-Piece-Non-Stick-Cookware/dp/B07481LPMF/259-4423389-2646104?pd_rd_w=UlD2Z&content-id=amzn1.sym.0b440ba7-e55f-435d-b17d-0bbcfd69be42&pf_rd_p=0b440ba7-e55f-435d-b17d-0bbcfd69be42&pf_rd_r=1YQRD6DRT9WDS7MBY0V9&pd_rd_wg=3q2tV&pd_rd_r=46ddd3eb-fbe3-439c-94ce-5825cf3536d6&pd_rd_i=B07481LPMF&th=1",
             photoLink: "/images/pan.jpg",
-            userId: user3.id,
+            ownerUserId: user3.id,
         },
     });
 
