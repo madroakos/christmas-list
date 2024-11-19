@@ -73,6 +73,26 @@ export async function getFollowedUsers(follower: User) {
     });
 }
 
+export async function followUser(followerId: number, followedId: number) {
+    'use server';
+    return prisma.follow.create({
+        data: {
+            followerId,
+            followingId: followedId,
+        },
+    });
+}
+
+export async function unfollowUser(followerId: number, followedId: number) {
+    'use server';
+    return prisma.follow.deleteMany({
+        where: {
+            followerId,
+            followingId: followedId,
+        },
+    });
+}
+
 export async function getIfUserFollows(followerId: number, followedId: number) {
     'use server';
     return prisma.follow.findFirst({
