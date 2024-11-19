@@ -3,8 +3,13 @@ import prisma from '@/prisma/db';
 import Link from 'next/link';
 import UserAvatar from '@/app/components/UserAvatar';
 import ProductList from './ProductList';
+import ShareProfileButton from './ShareProfileButton';
+import { headers } from 'next/headers'
 
 export default async function MyPage() {
+    const headersList = headers();
+    const origin = (await headersList).get('host');
+
     const { isAuthenticated, getUser } = getKindeServerSession();
 
     const isUserAuthenticated = await isAuthenticated();
@@ -36,6 +41,7 @@ export default async function MyPage() {
                     <div className="flex flex-col items-center gap-3">
                         <UserAvatar user={userExists} />
                         <div className="text-2xl font-bold">{user.given_name} {user.family_name}</div>
+                        <ShareProfileButton profileId={id} origin={origin} />
                     </div >
                     <div className="flex flex-col gap-3 mt-6 w-full">
                         <Link href={'/items/add'} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-64 self-center text-center">Add new item</Link>
