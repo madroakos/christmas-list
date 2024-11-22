@@ -3,6 +3,7 @@ import Image from "next/image";
 import DeleteButton from "./DeleteButton/DeleteButton";
 import { formatPrice } from "../helpers/formatPrice";
 import CancelBuyButton from "./CancelBuyButton/CancelBuyButton";
+import { WishlistItem } from "@prisma/client";
 
 export default function ProductList({
   userId,
@@ -10,7 +11,7 @@ export default function ProductList({
   buttonType,
 }: {
   userId: number;
-  items: any[];
+  items: WishlistItem[];
   buttonType: "delete" | "cancel";
 }) {
   return (
