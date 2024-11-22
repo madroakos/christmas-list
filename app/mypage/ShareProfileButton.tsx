@@ -6,7 +6,16 @@ export default function ShareProfileButton({ profileId, origin }: { profileId: s
     const handleClick = async () => {
         if (!origin) return;
         const profileUrl = `${origin}/user/${profileId}`;
-        await navigator.clipboard.writeText(profileUrl);
+        if (navigator.share) {
+            const shareData = {
+                title: 'Whishy',
+                text: 'Check out my profile on Whishy',
+                url: profileUrl,
+            };
+            await navigator.share(shareData);
+        } else {
+            await navigator.clipboard.writeText(profileUrl);
+        }
     }
 
 
