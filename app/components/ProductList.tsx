@@ -26,7 +26,7 @@ export default function ProductList({
               key={item.id}
               className="flex flex-row w-full md:self-center md:w-[40em] lg:w-[43em] xl:w-[45em] 2xl:w-[50em] justify-between px-6"
             >
-              <Link href={item.link}>
+              <Link href={item.link} target="_blank">
                 <div key={item.id} className="flex flex-row gap-3">
                   <div>
                     <Image
