@@ -1,5 +1,5 @@
 datasource db {
-    provider = "mysql"
+    provider = "postgresql"
     url      = env("DATABASE_URL")
 }
 
@@ -21,8 +21,8 @@ model User {
 model WishlistItem {
     id             Int    @id @default(autoincrement())
     name           String
-    link           String @db.LongText
-    photoLink      String @db.LongText
+    link           String
+    photoLink      String
     price          Float
     ownerUserId    Int
     boughtbyUserId Int?
