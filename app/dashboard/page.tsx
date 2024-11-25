@@ -17,7 +17,7 @@ export default async function DashboardPage() {
 
 
     return (
-        <div className="flex flex-col gap-6 p-12 md:mx-auto md:w-[40em] lg:w-[50em] xl:w-[55em] 2xl:w-[60em]">
+        <div className="flex flex-col gap-6 p-6 md:mx-auto md:w-[40em] lg:w-[50em] xl:w-[55em] 2xl:w-[60em]">
             <h1 className="font-bold text-3xl self-center">Santa&apos;s list</h1>
 
             {items ? items.map((userWithItems) => (
