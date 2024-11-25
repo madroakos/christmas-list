@@ -5,7 +5,7 @@ import UserAvatar from "@/app/components/UserAvatar";
 import ProductList from "@/app/components/ProductList";
 import ShareProfileButton from "./ShareProfileButton";
 import { headers } from "next/headers";
-import { WishlistItem } from "@prisma/client";
+import { User, WishlistItem } from "@prisma/client";
 
 export default async function MyPage() {
     const headersList = headers();
@@ -37,23 +37,28 @@ export default async function MyPage() {
                 },
             });
 
-            const usersTheyBoughtFor = await prisma.wishlistItem.findMany({
+            const itemsTheyBoughtForUsers = await prisma.wishlistItem.findMany({
                 where: {
                     boughtbyUserId: userExists.id,
                 },
             });
 
-            const itemsArray: WishlistItem[][] = [];
+            console.log(itemsTheyBoughtForUsers);
 
-            await Promise.all(usersTheyBoughtFor.map(async (user, index) => {
-                const items = await prisma.wishlistItem.findMany({
-                    where: {
-                        ownerUserId: user.ownerUserId,
-                    },
+            const itemsArray: { user: User, items: WishlistItem[] }[] = [];
+            for (const item of itemsTheyBoughtForUsers) {
+                const ownerUser = await prisma.user.findUnique({
+                    where: { id: item.ownerUserId },
                 });
-
-                itemsArray[index] = items;
-            }));
+                if (ownerUser) {
+                    const existingUser = itemsArray.find(entry => entry.user.id === ownerUser.id);
+                    if (existingUser) {
+                        existingUser.items.push(item);
+                    } else {
+                        itemsArray.push({ user: ownerUser, items: [item] });
+                    }
+                }
+            }
 
             return (
                 <div className="flex flex-col items-center">
@@ -81,28 +86,20 @@ export default async function MyPage() {
                         <h1 className="text-2xl font-bold text-center mb-6">
                             Items you marked for buy
                         </h1>
-                        {usersTheyBoughtFor.length > 0 &&
-                            usersTheyBoughtFor.map((user, index) => {
-                                const items = itemsArray[index];
-                                return (
-                                    items && items.length > 0 && (
-                                        <div key={index} className="flex flex-col items-center gap-3">
-                                            <div className="text-2xl font-bold">
-                                                {user.name}
-                                            </div>
-                                            <ProductList key={user.id} items={items} userId={user.id} buttonType="cancel" />
-                                        </div>
-                                    )
-                                );
-                            })
+                        {itemsArray.length > 0 &&
+                            itemsArray.map(({ user, items }, index) => (
+                                items.length > 0 && (
+                                    <div key={index} className="flex flex-col items-center gap-3 mb-9">
+                                        <Link href={`/user/${user.userID}`} className="text-2xl font-bold self-start pl-3">
+                                            {user.given_name} {user.family_name}
+                                        </Link>
+                                        <ProductList key={user.id} items={items} userId={user.id} buttonType="cancel" />
+                                    </div>
+                                )
+                            ))
                         }
-                        <ProductList
-                            userId={userExists.id}
-                            items={itemsBought}
-                            buttonType={"cancel"}
-                        />
                     </div>
-                </div>
+                </div >
             );
         }
     } else {
