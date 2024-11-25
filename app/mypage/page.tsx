@@ -31,12 +31,6 @@ export default async function MyPage() {
                 },
             });
 
-            const itemsBought = await prisma.wishlistItem.findMany({
-                where: {
-                    boughtbyUserId: userExists.id,
-                },
-            });
-
             const itemsTheyBoughtForUsers = await prisma.wishlistItem.findMany({
                 where: {
                     boughtbyUserId: userExists.id,
