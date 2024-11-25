@@ -2,7 +2,7 @@ import { revalidatePath } from 'next/cache';
 import { cancelBuy } from '@/prisma/actions';
 
 export default async function CancelBuyButton({ userId, itemId }: { userId: number, itemId: number }) {
-    const handleCancelBuy = async (formData: FormData) => {
+    const handleCancelBuy = async () => {
         'use server';
         if (!userId || !itemId) {
             return;

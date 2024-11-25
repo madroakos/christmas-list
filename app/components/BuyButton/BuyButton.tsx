@@ -1,9 +1,8 @@
 import { buyItem } from "@/prisma/actions";
 import { revalidatePath } from "next/cache";
-import { format } from "path";
 
 export default function BuyButton({ userId, itemId }: { userId: number, itemId: number }) {
-    const handleBuyItem = async (formData: FormData) => {
+    const handleBuyItem = async () => {
         'use server';
         if (userId === null) {
             return;
