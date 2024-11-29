@@ -14,7 +14,7 @@ export default function ProductList({
 }: {
   userId: number;
   items: WishlistItem[];
-  buttonType: "buy" | "delete" | "cancel";
+  buttonType: "buy" | "bought" | "delete" | "cancel";
 }) {
   return (
     <>
@@ -54,6 +54,7 @@ export default function ProductList({
                     <BoughtOrCancelButton itemId={item.id} itemBoughtById={item.boughtbyUserId} />
                   )
                 )}
+                {buttonType === "bought" && null}
                 {buttonType === "delete" && <DeleteButton itemId={item.id} />}
                 {buttonType === "cancel" && (
                   <CancelBuyButton userId={userId} itemId={item.id} />

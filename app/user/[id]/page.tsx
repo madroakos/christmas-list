@@ -92,14 +92,20 @@ export default async function Page({
       </div>
       <div className="flex flex-col gap-3 mt-6 w-full">
         <div className="flex flex-col gap-3 mt-6 w-full">
-          <h1 className="text-2xl font-bold text-center mb-6">
-            Items you marked for buy
-          </h1>
-          <ProductList
-            userId={userSearchedFor.id}
-            items={items}
-            buttonType={"buy"}
-          />
+          {isAuthenticated ? (
+            <ProductList
+              userId={userSearchedFor.id}
+              items={items}
+              buttonType={"buy"}
+            />
+          ) : (
+            <ProductList
+              userId={userSearchedFor.id}
+              items={items}
+              buttonType={"bought"}
+            />
+          )}
+
         </div>
       </div>
     </div>
