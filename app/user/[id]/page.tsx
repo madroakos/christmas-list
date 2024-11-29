@@ -51,17 +51,15 @@ export default async function Page({
   async function handleFollowUser() {
     "use server";
     if (!currentUserDBId || !userSearchedFor) return;
-    await followUser(currentUserDBId.id, userSearchedFor.id).then(() => {
-      revalidatePath(`/user/${userId}`);
-    });
+    await followUser(currentUserDBId.id, userSearchedFor.id);
+    revalidatePath(`/user/${userId}`);
   }
 
   async function handleUnfollowUser() {
     "use server";
     if (!currentUserDBId || !userSearchedFor) return;
-    await unfollowUser(currentUserDBId.id, userSearchedFor.id).then(() => {
-      revalidatePath(`/user/${userId}`);
-    });
+    await unfollowUser(currentUserDBId.id, userSearchedFor.id);
+    revalidatePath(`/user/${userId}`);
   }
 
   return (
