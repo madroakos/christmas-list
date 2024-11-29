@@ -92,7 +92,7 @@ export default async function Page({
       </div>
       <div className="flex flex-col gap-3 mt-6 w-full">
         <div className="flex flex-col gap-3 mt-6 w-full">
-          {isAuthenticated ? (
+          {isUserAuthenticated ? (
             <ProductList
               userId={userSearchedFor.id}
               items={items}
