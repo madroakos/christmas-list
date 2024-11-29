@@ -8,8 +8,8 @@ export default function ShareProfileButton({ profileId, origin }: { profileId: s
         const profileUrl = `/user/${profileId}`;
         if (navigator.share) {
             const shareData = {
-                title: 'Whishy',
-                text: 'Check out my profile on Whishy',
+                title: 'Wishy',
+                text: 'Check out my profile on Wishy',
                 url: profileUrl,
             };
             await navigator.share(shareData);
