@@ -5,7 +5,7 @@ import { faShareNodes } from '@fortawesome/free-solid-svg-icons';
 export default function ShareProfileButton({ profileId, origin }: { profileId: number, origin: string | null }) {
     const handleClick = async () => {
         if (!origin) return;
-        const profileUrl = `${origin}/user/${profileId}`;
+        const profileUrl = `/user/${profileId}`;
         if (navigator.share) {
             const shareData = {
                 title: 'Whishy',
