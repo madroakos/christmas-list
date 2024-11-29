@@ -2,7 +2,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShareNodes } from '@fortawesome/free-solid-svg-icons';
 
-export default function ShareProfileButton({ profileId, origin }: { profileId: string, origin: string | null }) {
+export default function ShareProfileButton({ profileId, origin }: { profileId: number, origin: string | null }) {
     const handleClick = async () => {
         if (!origin) return;
         const profileUrl = `${origin}/user/${profileId}`;
