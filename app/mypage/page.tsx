@@ -61,7 +61,7 @@ export default async function MyPage() {
                         <div className="text-2xl font-bold">
                             {user.given_name} {user.family_name}
                         </div>
-                        <ShareProfileButton profileId={userExists.id} origin={origin} />
+                        <ShareProfileButton profileId={id} origin={origin} />
                     </div>
                     <div className="flex flex-col gap-3 mt-6 w-full">
                         <Link
