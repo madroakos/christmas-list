@@ -98,7 +98,7 @@ export default async function Page({
           <ProductList
             userId={userSearchedFor.id}
             items={items}
-            buttonType={"cancel"}
+            buttonType={"buy"}
           />
         </div>
       </div>

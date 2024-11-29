@@ -3,7 +3,9 @@ import Image from "next/image";
 import DeleteButton from "./DeleteButton/DeleteButton";
 import { formatPrice } from "../helpers/formatPrice";
 import CancelBuyButton from "./CancelBuyButton/CancelBuyButton";
+import BuyButton from "./BuyButton/BuyButton";
 import { WishlistItem } from "@prisma/client";
+import BoughtOrCancelButton from "./BoughtOrCancelButton";
 
 export default function ProductList({
   userId,
@@ -12,7 +14,7 @@ export default function ProductList({
 }: {
   userId: number;
   items: WishlistItem[];
-  buttonType: "delete" | "cancel";
+  buttonType: "buy" | "delete" | "cancel";
 }) {
   return (
     <>
@@ -45,6 +47,13 @@ export default function ProductList({
                 </div>
               </Link>
               <div className="self-center">
+                {buttonType === "buy" && (
+                  item.boughtbyUserId === null ? (
+                    <BuyButton userId={userId} itemId={item.id} />
+                  ) : (
+                    <BoughtOrCancelButton itemId={item.id} itemBoughtById={item.boughtbyUserId} />
+                  )
+                )}
                 {buttonType === "delete" && <DeleteButton itemId={item.id} />}
                 {buttonType === "cancel" && (
                   <CancelBuyButton userId={userId} itemId={item.id} />
